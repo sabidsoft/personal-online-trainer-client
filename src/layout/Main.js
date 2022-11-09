@@ -1,10 +1,12 @@
 import React from 'react'
-import Home from '../pages/Home'
+import { Outlet } from 'react-router-dom'
+import Menubar from '../components/Menubar'
 
 const Main = () => {
     return (
         <div>
-            <Home/>
+            <Menubar/>
+            <Outlet/>
         </div>
     )
 }
