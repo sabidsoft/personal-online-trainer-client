@@ -4,6 +4,7 @@ import Blogs from "../pages/Blogs"
 import ErrorPage from "../pages/ErrorPage"
 import Home from "../pages/Home"
 import Login from "../pages/Login"
+import Register from "../pages/Register"
 import Service from "../pages/Service"
 import Services from "../pages/Services"
 import DOMAIN_NAME from "../utilities/DOMAIN_NAME"
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />
+            },
+            {
+                path: '/register',
+                element: <Register/>
             }
         ]
     }

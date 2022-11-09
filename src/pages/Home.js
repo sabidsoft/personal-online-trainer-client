@@ -46,7 +46,7 @@ const Home = () => {
                                             <div className='d-flex justify-content-between align-items-center mt-4'>
                                                 <p className='text-info fw-semibold pt-3'>Price: {service.price} Tk/month</p>
                                                 <Link to={`/services/${service._id}`}>
-                                                    <Button variant="outline-info" className='rounded-pill px-4 fw-semibold'>View Details</Button>
+                                                    <Button variant="outline-info" className='rounded-pill px-4'>View Details</Button>
                                                 </Link>
                                             </div>
                                         </div>
