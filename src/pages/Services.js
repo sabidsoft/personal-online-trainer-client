@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import Footer from '../components/Footer'
+import { Link } from 'react-router-dom'
 
 const Services = () => {
     const [services, setServices] = useState([])
@@ -44,7 +45,9 @@ const Services = () => {
                                         <p style={{ textAlign: 'justify' }}>{service.short_description}</p>
                                         <div className='d-flex justify-content-between align-items-center mt-4'>
                                             <p className='text-info fw-semibold pt-3'>Price: {service.price} Tk/month</p>
-                                            <Button variant="outline-info" className='rounded-pill px-4 fw-semibold'>View Details</Button>
+                                            <Link to={`/services/${service._id}`}>
+                                                <Button variant="outline-info" className='rounded-pill px-4 fw-semibold'>View Details</Button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </Col>

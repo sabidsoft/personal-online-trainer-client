@@ -45,7 +45,9 @@ const Home = () => {
                                             <p style={{ textAlign: 'justify' }}>{service.short_description}</p>
                                             <div className='d-flex justify-content-between align-items-center mt-4'>
                                                 <p className='text-info fw-semibold pt-3'>Price: {service.price} Tk/month</p>
-                                                <Button variant="outline-info" className='rounded-pill px-4 fw-semibold'>View Details</Button>
+                                                <Link to={`/services/${service._id}`}>
+                                                    <Button variant="outline-info" className='rounded-pill px-4 fw-semibold'>View Details</Button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </Col>
