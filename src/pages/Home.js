@@ -14,7 +14,7 @@ const Home = () => {
     const [services, setServices] = useState([])
 
     useEffect(() => {
-        fetch(`${DOMAIN_NAME}/home-services`)
+        fetch(`${DOMAIN_NAME}/services-home`)
             .then(res => res.json())
             .then(data => setServices(data))
             .catch(err => console.log(err))
@@ -73,7 +73,7 @@ const Home = () => {
             }}>
                 <Container>
                     <Row>
-                        <Col sm='12' md='4' className=''>
+                        <Col sm='12' md='4' className='px-4 px-md-0'>
                             <h1 className='w-50 fw-bolder text-danger m-0 mb-5'>ABOUT ME</h1>
                             <p className='text-white m-0 mb-4' style={{ textAlign: 'justify' }}>
                                 I'm not here to carry you to fitness, I'm here to motivate you to carry yourself to your goals.
@@ -91,7 +91,7 @@ const Home = () => {
             <section className='py-5 my-5'>
                 <Container>
                     <Row>
-                        <Col className='my-5'>
+                        <Col className='my-5 px-4 px-md-0'>
                             <h1 className='text-uppercase text-center fw-bolder m-0 mb-5'>Why is exercise so important for seniors?</h1>
                             <p style={{ textAlign: 'justify' }}>
                                 Whether you were once much more physically active or have never been one to exercise regularly, now is a great time to start an exercise and fitness regimen. Getting and staying in shape is just as important for seniors as it is for younger people.

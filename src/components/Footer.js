@@ -34,7 +34,7 @@ const Footer = () => {
                     </div>
                 </Container>
             </div>
-            <div className='bg-zero py-4'>
+            <div className='bg-zero py-4 px-4 px-md-0'>
                 <p className='text-muted text-center m-0'>&copy; Personal Fitness Trainer 2022 | All rights reserved.</p>
             </div>
         </footer>
