@@ -63,7 +63,7 @@ const EditReview = () => {
                         </div>
                         <h5 className='mb-3'>Edit {review?.service_name} review</h5>
                         <Form onSubmit={handleOnSubmit} className='pb-5'>
-                            <textarea defaultValue={review?.reviewer_review} name="textarea" cols="10" rows="6" placeholder='Write your review' className='w-100 p-3 d-inline-block mb-3'></textarea>
+                            <textarea defaultValue={review?.reviewer_review} name="textarea" cols="10" rows="6" className='w-100 p-3 d-inline-block mb-3'></textarea>
                             <Button variant="info" type='submit' className='text-white'>Submit Edited Review</Button>
                         </Form>
                     </Col>

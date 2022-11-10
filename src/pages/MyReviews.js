@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from '../components/Footer'
 
 const MyReviews = () => {
     const [myReviews, setMyReiews] = useState([])
@@ -52,7 +53,7 @@ const MyReviews = () => {
                 ) : (
                     <div className='my-5'>
                         <h1 className='text-center mb-5'>My Reviews</h1>
-                        <Container>
+                        <Container className='pb-5'>
                             {
                                 myReviews.map(myReview => {
                                     return (
@@ -94,6 +95,7 @@ const MyReviews = () => {
                     </div>
                 )
             }
+            <Footer/>
             <ToastContainer
                 position="top-center"
             />

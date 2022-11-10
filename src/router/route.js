@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import Main from "../layout/Main"
+import AddService from "../pages/AddService"
 import Blogs from "../pages/Blogs"
 import EditReview from "../pages/EditReview"
 import ErrorPage from "../pages/ErrorPage"
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
                 path: '/services/:id',
                 element: <Service/>,
                 loader: ({params}) => fetch(`${DOMAIN_NAME}/services/${params.id}`)
+            },
+            {
+                path: '/add-service',
+                element: <AddService/>
             },
             {
                 path: '/my-reviews',
