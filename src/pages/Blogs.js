@@ -3,8 +3,11 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Footer from '../components/Footer'
+import useTitle from '../hooks/useTitle'
 
 const Blogs = () => {
+    useTitle('Blogs')
+
     return (
         <div>
             <h1 className='text-center my-5'>Blogs</h1>

@@ -11,10 +11,12 @@ import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Footer from '../components/Footer'
+import useTitle from '../hooks/useTitle'
 
 const MyReviews = () => {
     const [myReviews, setMyReiews] = useState([])
-    const { user } = useContext(AuthContext)
+    const { user, logout } = useContext(AuthContext)
+    useTitle('My Reviews')
 
     const handleDeleteReview = id => {
         fetch(`${DOMAIN_NAME}/delete-review/${id}`, {
@@ -22,33 +24,58 @@ const MyReviews = () => {
         })
             .then(res => res.json())
             .then(data => {
-                fetch(`${DOMAIN_NAME}/my-reviews?email=${user?.email}`)
-                    .then(res => res.json())
+                fetch(`${DOMAIN_NAME}/my-reviews?email=${user?.email}`, {
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                    }
+                })
+                    .then(res => {
+                        if (res.status === 401 || res.status === 403) {
+                            return logout()
+                                .then(() => {  })
+                                .catch(err => console.log(err.code))
+                        }
+                        return res.json()
+                    })
                     .then(data => {
                         setMyReiews(data)
                     })
                     .catch(err => console.log(err))
-                toast.success('Review deleted!')
+                toast.success('Review has been deleted.', {
+                    position: "top-center",
+                    autoClose: 2000,
+                })
 
             })
             .catch(err => console.log(err))
     }
 
     useEffect(() => {
-        fetch(`${DOMAIN_NAME}/my-reviews?email=${user?.email}`)
-            .then(res => res.json())
+        fetch(`${DOMAIN_NAME}/my-reviews?email=${user?.email}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('auth-token')}`
+            }
+        })
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    return logout()
+                        .then(() => console.log('Logout successful'))
+                        .catch(err => console.log(err.code))
+                }
+                return res.json()
+            })
             .then(data => {
                 setMyReiews(data)
             })
             .catch(err => console.log(err))
-    }, [user])
+    }, [user?.email, logout])
 
     return (
         <>
             {
                 myReviews.length === 0 ? (
                     <div className='vh-100 d-flex justify-content-center align-items-center'>
-                        <h3>No Reviews Found</h3>
+                        <h3>No reviews were added</h3>
                     </div>
                 ) : (
                     <div className='my-5'>
@@ -58,7 +85,7 @@ const MyReviews = () => {
                                 myReviews.map(myReview => {
                                     return (
                                         <Row key={myReview._id} className='mb-5'>
-                                            <Col>
+                                            <Col className='shadow p-4'>
                                                 <div className='d-flex align-items-center mb-2'>
                                                     <div>
                                                         <Image
@@ -78,13 +105,13 @@ const MyReviews = () => {
                                                     <AiFillStar size={20} color='#FFD700' />
                                                     <AiFillStar size={20} color='#FFD700' />
                                                 </div>
-                                                <h5>Review for {myReview.service_name}</h5>
-                                                <p style={{ textAlign: 'justify' }}>{myReview.reviewer_review}</p>
+                                                <h6>Review for {myReview.service_name}</h6>
+                                                <p className='mb-4' style={{ textAlign: 'justify' }}>{myReview.reviewer_review}</p>
                                                 <div>
                                                     <Link to='/edit-review' state={myReview._id}>
-                                                        <Button variant="info" className='text-white d-inline-block me-3'>Edit Review</Button>
+                                                        <Button variant="outline-info" className='d-inline-block me-3'>Edit Review</Button>
                                                     </Link>
-                                                    <Button onClick={() => handleDeleteReview(myReview._id)} variant="info" className='text-white'>Delete Review</Button>
+                                                    <Button onClick={() => handleDeleteReview(myReview._id)} variant="outline-info">Delete Review</Button>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -95,10 +122,8 @@ const MyReviews = () => {
                     </div>
                 )
             }
-            <Footer/>
-            <ToastContainer
-                position="top-center"
-            />
+            <Footer />
+            <ToastContainer/>
         </>
     )
 }

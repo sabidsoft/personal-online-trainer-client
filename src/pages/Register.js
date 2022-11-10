@@ -6,11 +6,13 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
+import useTitle from '../hooks/useTitle'
 
 const Register = () => {
     const [error, setError] = useState('')
     const { signUp, updateUserProfile } = useContext(AuthContext)
     const navigate = useNavigate()
+    useTitle('Register')
 
     const handleOnSubmit = event => {
         event.preventDefault()

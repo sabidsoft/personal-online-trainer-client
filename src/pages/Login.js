@@ -7,11 +7,14 @@ import Form from 'react-bootstrap/Form'
 import { FcGoogle } from 'react-icons/fc'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
+import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
+import useTitle from '../hooks/useTitle'
 
 const Login = () => {
     const [error, setError] = useState('')
     const { login, googleSignIn } = useContext(AuthContext)
     const navigate = useNavigate()
+    useTitle('Login')
     const location = useLocation()
 
 
@@ -22,9 +25,25 @@ const Login = () => {
 
         login(email, password)
             .then(result => {
-                navigate(location.state?.pathname || '/', { replace: true })
-                setError('')
-                event.target.reset()
+                const user = result.user
+                const currentUserEmail = {
+                    email: user.email
+                }
+                fetch(`${DOMAIN_NAME}/jwt`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUserEmail)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('auth-token', data.token)
+                        navigate(location.state?.pathname || '/', { replace: true })
+                        setError('')
+                        event.target.reset()
+                    })
+                    .catch(err => console.log(err.code))
             })
             .catch(error => {
                 console.error('error: ', error.code)

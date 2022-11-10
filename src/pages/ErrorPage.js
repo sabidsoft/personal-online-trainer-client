@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
+import useTitle from '../hooks/useTitle'
 
 const ErrorPage = () => {
+    useTitle('Error Page')
     return (
         <div className='vh-100 d-flex flex-column justify-content-center align-items-center'>
             <h1 className='mb-4'>Oops!</h1>

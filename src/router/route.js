@@ -10,6 +10,7 @@ import MyReviews from "../pages/MyReviews"
 import Register from "../pages/Register"
 import Service from "../pages/Service"
 import Services from "../pages/Services"
+import PrivateRoute from "../PrivateRoute/PrivateRoute"
 import DOMAIN_NAME from "../utilities/DOMAIN_NAME"
 
 const router = createBrowserRouter([
@@ -34,11 +35,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/add-service',
-                element: <AddService/>
+                element: <PrivateRoute><AddService/></PrivateRoute>
             },
             {
                 path: '/my-reviews',
-                element: <MyReviews/>
+                element: <PrivateRoute><MyReviews/></PrivateRoute>
             },
             {
                 path: '/edit-review',

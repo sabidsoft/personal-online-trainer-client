@@ -12,12 +12,14 @@ import Button from 'react-bootstrap/Button'
 import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import useTitle from '../hooks/useTitle'
 
 const Service = () => {
     const [reviews, setReviews] = useState([])
     const { user } = useContext(AuthContext)
     const { _id, service_name, image, price, description } = useLoaderData()
     const location = useLocation()
+    useTitle('Service')
 
     const handleOnSubmit = event => {
         event.preventDefault()

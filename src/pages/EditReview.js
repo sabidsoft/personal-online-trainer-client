@@ -10,10 +10,12 @@ import Form from 'react-bootstrap/Form'
 import Footer from '../components/Footer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import useTitle from '../hooks/useTitle'
 
 const EditReview = () => {
     const [review, setReview] = useState(null)
     const location = useLocation()
+    useTitle('Edit Review')
     const id = location.state
 
     const handleOnSubmit = event => {
@@ -29,7 +31,10 @@ const EditReview = () => {
         })
             .then(res => res.json())
             .then(data => {
-                toast.success('Review updated!')
+                toast.success('Review has been updated.', {
+                    position: "top-center",
+                    autoClose: 2000,
+                })
             })
             .catch(err => console.log(err))
     }
@@ -70,9 +75,7 @@ const EditReview = () => {
                 </Row>
             </Container>
             <Footer />
-            <ToastContainer
-                position="top-center"
-            />
+            <ToastContainer/>
         </>
     )
 }

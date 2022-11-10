@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -6,9 +6,13 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Footer from '../components/Footer'
 import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import useTitle from '../hooks/useTitle'
 
 const AddService = () => {
-    const [error, setError] = useState('')
+    useTitle('Add Service')
+
     const handleOnSubmit = event => {
         event.preventDefault()
         const serviceName = event.target.serviceName.value
@@ -36,7 +40,11 @@ const AddService = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            toast.success('Service has been added.', {
+                position: "top-center",
+                autoClose: 2000,
+            })
+            event.target.reset()
         })
         .catch(err => console.log(err))
     }
@@ -85,13 +93,10 @@ const AddService = () => {
                                 />
                             </Form.Group>
                             <label htmlFor="shortDescription" className='mb-2'>Short Description</label>
-                            <textarea name="shortDescription" id='shortDescription' cols="10" rows="1" placeholder='Write your short description (max 100 characters)' className='w-100 p-3 d-inline-block mb-3'></textarea>
+                            <textarea name="shortDescription" id='shortDescription' cols="10" rows="1" placeholder='Write your short description (max 100 characters)' className='w-100 p-3 d-inline-block mb-3' required></textarea>
 
                             <label htmlFor="fullDescription" className='mb-2'>Full Description</label>
-                            <textarea name="fullDescription" id='fullDescription' cols="10" rows="6" placeholder='Write your full description' className='w-100 p-3 d-inline-block mb-3'></textarea>
-                            {
-                                error && <p className='text-center text-danger'>{error}</p>
-                            }
+                            <textarea name="fullDescription" id='fullDescription' cols="10" rows="6" placeholder='Write your full description' className='w-100 p-3 d-inline-block mb-3' required></textarea>
                             <Button variant="info" type="submit" className=' text-white'>
                                 Submit Service
                             </Button>
@@ -100,6 +105,7 @@ const AddService = () => {
                 </Row>
             </Container>
             <Footer/>
+            <ToastContainer/>
         </>
     );
 };

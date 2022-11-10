@@ -9,9 +9,11 @@ import { Link } from 'react-router-dom'
 import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 import Footer from '../components/Footer'
 import bgImg from '../assets/images/section.jpg'
+import useTitle from '../hooks/useTitle'
 
 const Home = () => {
     const [services, setServices] = useState([])
+    useTitle('Home')
 
     useEffect(() => {
         fetch(`${DOMAIN_NAME}/services-home`)

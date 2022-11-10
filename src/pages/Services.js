@@ -7,9 +7,11 @@ import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
+import useTitle from '../hooks/useTitle'
 
 const Services = () => {
     const [services, setServices] = useState([])
+    useTitle('Services')
 
     useEffect(() => {
         fetch(`${DOMAIN_NAME}/services`)
