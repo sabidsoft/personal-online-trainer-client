@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import { AiFillStar } from 'react-icons/ai'
 import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -15,6 +16,7 @@ import useTitle from '../hooks/useTitle'
 
 const MyReviews = () => {
     const [myReviews, setMyReiews] = useState([])
+    const [loading, setLoading] = useState(true)
     const { user, logout } = useContext(AuthContext)
     useTitle('My Reviews')
 
@@ -32,7 +34,7 @@ const MyReviews = () => {
                     .then(res => {
                         if (res.status === 401 || res.status === 403) {
                             return logout()
-                                .then(() => {  })
+                                .then(() => { })
                                 .catch(err => console.log(err.code))
                         }
                         return res.json()
@@ -66,64 +68,75 @@ const MyReviews = () => {
             })
             .then(data => {
                 setMyReiews(data)
+                setLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => setLoading(false))
     }, [user?.email, logout])
 
     return (
         <>
             {
-                myReviews.length === 0 ? (
+                loading ? (
                     <div className='vh-100 d-flex justify-content-center align-items-center'>
-                        <h3>No reviews were added</h3>
+                        <Spinner animation="border" variant="info" />
                     </div>
                 ) : (
-                    <div className='my-5'>
-                        <h1 className='text-center mb-5'>My Reviews</h1>
-                        <Container className='pb-5'>
-                            {
-                                myReviews.map(myReview => {
-                                    return (
-                                        <Row key={myReview._id} className='mb-5'>
-                                            <Col className='shadow p-4'>
-                                                <div className='d-flex align-items-center mb-2'>
-                                                    <div>
-                                                        <Image
-                                                            src={myReview.reviewer_photo}
-                                                            width={40}
-                                                            height={40}
-                                                            roundedCircle
-                                                            alt='Reviewer Profile'
-                                                        />
-                                                    </div>
-                                                    <p className='fw-bold m-0 ms-2'>{myReview.reviewer_name}</p>
-                                                </div>
-                                                <div className='mb-2'>
-                                                    <AiFillStar size={20} color='#FFD700' />
-                                                    <AiFillStar size={20} color='#FFD700' />
-                                                    <AiFillStar size={20} color='#FFD700' />
-                                                    <AiFillStar size={20} color='#FFD700' />
-                                                    <AiFillStar size={20} color='#FFD700' />
-                                                </div>
-                                                <h6>Review for {myReview.service_name}</h6>
-                                                <p className='mb-4' style={{ textAlign: 'justify' }}>{myReview.reviewer_review}</p>
-                                                <div>
-                                                    <Link to='/edit-review' state={myReview._id}>
-                                                        <Button variant="outline-info" className='d-inline-block me-3'>Edit Review</Button>
-                                                    </Link>
-                                                    <Button onClick={() => handleDeleteReview(myReview._id)} variant="outline-info">Delete Review</Button>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    )
-                                })
-                            }
-                        </Container>
-                    </div>
+                    <>
+                        {
+                            myReviews.length === 0 ? (
+                                <div className='vh-100 d-flex justify-content-center align-items-center'>
+                                    <h3>No reviews were added</h3>
+                                </div>
+                            ) : (
+                                <div className='my-5'>
+                                    <h1 className='text-center mb-5'>My Reviews</h1>
+                                    <Container className='pb-5'>
+                                        {
+                                            myReviews.map(myReview => {
+                                                return (
+                                                    <Row key={myReview._id} className='mb-5'>
+                                                        <Col className='shadow p-4'>
+                                                            <div className='d-flex align-items-center mb-2'>
+                                                                <div>
+                                                                    <Image
+                                                                        src={myReview.reviewer_photo}
+                                                                        width={40}
+                                                                        height={40}
+                                                                        roundedCircle
+                                                                        alt='Reviewer Profile'
+                                                                    />
+                                                                </div>
+                                                                <p className='fw-bold m-0 ms-2'>{myReview.reviewer_name}</p>
+                                                            </div>
+                                                            <div className='mb-2'>
+                                                                <AiFillStar size={20} color='#FFD700' />
+                                                                <AiFillStar size={20} color='#FFD700' />
+                                                                <AiFillStar size={20} color='#FFD700' />
+                                                                <AiFillStar size={20} color='#FFD700' />
+                                                                <AiFillStar size={20} color='#FFD700' />
+                                                            </div>
+                                                            <h6>Review for {myReview.service_name}</h6>
+                                                            <p className='mb-4' style={{ textAlign: 'justify' }}>{myReview.reviewer_review}</p>
+                                                            <div>
+                                                                <Link to='/edit-review' state={myReview._id}>
+                                                                    <Button variant="outline-info" className='d-inline-block me-3'>Edit Review</Button>
+                                                                </Link>
+                                                                <Button onClick={() => handleDeleteReview(myReview._id)} variant="outline-info">Delete Review</Button>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                )
+                                            })
+                                        }
+                                    </Container>
+                                </div>
+                            )
+                        }
+                        <Footer />
+                        <ToastContainer />
+                    </>
                 )
             }
-            <Footer />
-            <ToastContainer/>
         </>
     )
 }

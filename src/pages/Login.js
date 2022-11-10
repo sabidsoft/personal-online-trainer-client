@@ -68,7 +68,23 @@ const Login = () => {
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
-                navigate(location.state?.pathname || '/', { replace: true })
+                const user = result.user
+                const currentUserEmail = {
+                    email: user.email
+                }
+                fetch(`${DOMAIN_NAME}/jwt`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUserEmail)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('auth-token', data.token)
+                        navigate(location.state?.pathname || '/', { replace: true })
+                    })
+                    .catch(err => console.log(err))
             })
             .catch(error => {
                 if (error.code === 'auth/internal-error') {

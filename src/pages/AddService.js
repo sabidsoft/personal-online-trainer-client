@@ -12,7 +12,6 @@ import useTitle from '../hooks/useTitle'
 
 const AddService = () => {
     useTitle('Add Service')
-
     const handleOnSubmit = event => {
         event.preventDefault()
         const serviceName = event.target.serviceName.value

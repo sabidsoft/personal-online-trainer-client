@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthProvider'
 import useTitle from '../hooks/useTitle'
+import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 
 const Register = () => {
     const [error, setError] = useState('')
@@ -19,7 +20,6 @@ const Register = () => {
     const handleOnSubmit = event => {
         setLoading(true)
         event.preventDefault()
-
         const fullname = event.target.fullname.value
         const photoURL = event.target.photoURL.value
         const email = event.target.email.value
@@ -37,15 +37,34 @@ const Register = () => {
 
         signUp(email, password)
             .then(result => {
-                navigate('/')
-                event.target.reset()
-                updateUserProfile(profile)
-                    .then(() => { })
-                    .catch(error => {
+                const user = result.user
+                const currentUserEmail = {
+                    email: user.email
+                }
+
+                fetch(`${DOMAIN_NAME}/jwt`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUserEmail)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('auth-token', data.token)
+                        navigate('/')
+                        event.target.reset()
+                        updateUserProfile(profile)
+                            .then(() => { })
+                            .catch(error => {
+                                setLoading(false)
+                            })
+                        setError('')
                         setLoading(false)
                     })
-                setError('')
-                setLoading(false)
+                    .catch(err => {
+                        setLoading(false)
+                    })
             })
             .catch(error => {
                 setLoading(false)

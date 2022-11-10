@@ -28,7 +28,6 @@ const Service = () => {
     const handleOnSubmit = event => {
         event.preventDefault()
         const review = event.target.textarea.value
-
         const reviewInfo = {
             service_id: _id,
             service_name: service_name,

@@ -9,12 +9,13 @@ import { Link, NavLink } from 'react-router-dom'
 
 const Menubar = () => {
     const { user, logout } = useContext(AuthContext)
-
+    
     const handleLogout = () => {
         logout()
             .then(() => { })
             .catch(err => console.log(err.code))
     }
+
     return (
         <Navbar variant='dark' expand="lg" className='bg-zero py-3 position-sticky top-0'>
             <Container>
