@@ -11,6 +11,8 @@ import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 import Footer from '../components/Footer'
 import bgImg from '../assets/images/section.jpg'
 import useTitle from '../hooks/useTitle'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
+import 'react-photo-view/dist/react-photo-view.css'
 
 const Home = () => {
     const [services, setServices] = useState([])
@@ -49,13 +51,17 @@ const Home = () => {
                                                 <Col key={service._id} lg='4' sm='12'>
                                                     <div className='shadow rounded px-4 py-4 mb-5'>
                                                         <h5 className='mb-3'>{service.service_name}</h5>
-                                                        <Image
-                                                            src={service.image}
-                                                            width={'100%'}
-                                                            height={225}
-                                                            className='rounded mb-3'
-                                                            alt='Service Image'
-                                                        />
+                                                        <PhotoProvider>
+                                                            <PhotoView src={service.image}>
+                                                                <Image
+                                                                    src={service.image}
+                                                                    width={'100%'}
+                                                                    height={225}
+                                                                    className='rounded mb-3'
+                                                                    alt='Service Image'
+                                                                />
+                                                            </PhotoView>
+                                                        </PhotoProvider>
                                                         <p style={{ textAlign: 'justify' }}>{service.short_description}</p>
                                                         <div className='d-flex justify-content-between align-items-center mt-4'>
                                                             <p className='text-info fw-semibold pt-3'>Price: {service.price} Tk/month</p>

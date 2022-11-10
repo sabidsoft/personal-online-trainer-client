@@ -13,6 +13,8 @@ import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import useTitle from '../hooks/useTitle'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
+import 'react-photo-view/dist/react-photo-view.css'
 
 const Service = () => {
     const [reviews, setReviews] = useState([])
@@ -48,7 +50,10 @@ const Service = () => {
                     .then(res => res.json())
                     .then(data => {
                         setReviews(data)
-                        toast.success('Review submited!')
+                        toast.success('Review has been submited.', {
+                            position: "top-center",
+                            autoClose: 2000,
+                        })
                     })
                     .catch(err => console.log(err))
             })
@@ -69,12 +74,16 @@ const Service = () => {
             <Container className='mb-5'>
                 <Row>
                     <Col className=''>
-                        <Image
-                            src={image}
-                            width={'100%'}
-                            height={600}
-                            alt='Service Picture'
-                        />
+                        <PhotoProvider>
+                            <PhotoView src={image}>
+                                <Image
+                                    src={image}
+                                    width={'100%'}
+                                    height={600}
+                                    alt='Service Picture'
+                                />
+                            </PhotoView>
+                        </PhotoProvider>
                         <h1 className='text-center mt-5 mb-3'>{service_name}</h1>
                         <p className='text-center fs-5 fw-bold mb-5'>Price: {price}/month</p>
                         <p className='mt-5' style={{ textAlign: 'justify' }}><span className='d-inline-block text-info fs-5 fw-bold mb-2'>Description:</span><br />{description}</p>
@@ -155,9 +164,7 @@ const Service = () => {
                 }
             </Container>
             <Footer />
-            <ToastContainer
-                position="top-center"
-            />
+            <ToastContainer />
         </>
     )
 }

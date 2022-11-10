@@ -40,16 +40,18 @@ const Login = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        setLoading(false)
                         localStorage.setItem('auth-token', data.token)
                         navigate(location.state?.pathname || '/', { replace: true })
                         setError('')
                         event.target.reset()
+                        setLoading(false)
                     })
-                    .catch(err => console.log(err.code))
+                    .catch(err => {
+                        setLoading(false)
+                    })
             })
             .catch(error => {
-                console.error('error: ', error.code)
+                setLoading(false)
                 if (error.code === 'auth/wrong-password') {
                     setError(`Email address or password didn't match!`)
                 }
@@ -69,7 +71,6 @@ const Login = () => {
                 navigate(location.state?.pathname || '/', { replace: true })
             })
             .catch(error => {
-                console.error('error:', error.code)
                 if (error.code === 'auth/internal-error') {
                     setError('Something went wrong.')
                 }
