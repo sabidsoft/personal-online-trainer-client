@@ -26,7 +26,7 @@ const Services = () => {
             })
             .catch(err => console.log(err))
     }, [])
-    
+
     return (
         <>
             {
@@ -60,6 +60,7 @@ const Services = () => {
                                                                 height={225}
                                                                 className='rounded mb-3'
                                                                 alt='Service Image'
+                                                                style={{ objectFit: 'cover' }}
                                                             />
                                                         </PhotoView>
                                                     </PhotoProvider>

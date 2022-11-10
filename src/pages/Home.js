@@ -10,14 +10,12 @@ import { Link } from 'react-router-dom'
 import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 import Footer from '../components/Footer'
 import bgImg from '../assets/images/section.jpg'
-import useTitle from '../hooks/useTitle'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import 'react-photo-view/dist/react-photo-view.css'
 
 const Home = () => {
     const [services, setServices] = useState([])
     const [loading, setLoading] = useState(true)
-    useTitle('Home')
 
     useEffect(() => {
         fetch(`${DOMAIN_NAME}/services-home`)
@@ -59,6 +57,7 @@ const Home = () => {
                                                                     height={225}
                                                                     className='rounded mb-3'
                                                                     alt='Service Image'
+                                                                    style={{ objectFit: 'cover' }}
                                                                 />
                                                             </PhotoView>
                                                         </PhotoProvider>

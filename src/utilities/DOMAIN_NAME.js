@@ -1,2 +1,2 @@
-const DOMAIN_NAME = 'http://localhost:5000'
+const DOMAIN_NAME = 'https://personal-online-trainer-server.vercel.app'
 export default DOMAIN_NAME
