@@ -10,6 +10,8 @@ import { AuthContext } from '../context/AuthProvider'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Service = () => {
     const [reviews, setReviews] = useState([])
@@ -44,6 +46,7 @@ const Service = () => {
                     .then(res => res.json())
                     .then(data => {
                         setReviews(data)
+                        toast.success('Review submited!')
                     })
                     .catch(err => console.log(err))
             })
@@ -78,7 +81,7 @@ const Service = () => {
             </Container>
             <Container className=''>
                 <Row>
-                    <Col className=''>
+                    <Col className='mb-4'>
                         <h1 className='text-center text-info mb-3'>Reviews</h1>
                     </Col>
                 </Row>
@@ -150,6 +153,9 @@ const Service = () => {
                 }
             </Container>
             <Footer />
+            <ToastContainer
+                position="top-center"
+            />
         </>
     )
 }

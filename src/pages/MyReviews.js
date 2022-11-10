@@ -8,16 +8,35 @@ import Image from 'react-bootstrap/Image'
 import { AiFillStar } from 'react-icons/ai'
 import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const MyReviews = () => {
     const [myReviews, setMyReiews] = useState([])
     const { user } = useContext(AuthContext)
 
+    const handleDeleteReview = id => {
+        fetch(`${DOMAIN_NAME}/delete-review/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                fetch(`${DOMAIN_NAME}/my-reviews?email=${user?.email}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        setMyReiews(data)
+                    })
+                    .catch(err => console.log(err))
+                toast.success('Review deleted!')
+
+            })
+            .catch(err => console.log(err))
+    }
+
     useEffect(() => {
         fetch(`${DOMAIN_NAME}/my-reviews?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setMyReiews(data)
             })
             .catch(err => console.log(err))
@@ -64,7 +83,7 @@ const MyReviews = () => {
                                                     <Link to='/edit-review' state={myReview._id}>
                                                         <Button variant="info" className='text-white d-inline-block me-3'>Edit Review</Button>
                                                     </Link>
-                                                    <Button variant="info" className='text-white'>Delete Review</Button>
+                                                    <Button onClick={() => handleDeleteReview(myReview._id)} variant="info" className='text-white'>Delete Review</Button>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -75,6 +94,9 @@ const MyReviews = () => {
                     </div>
                 )
             }
+            <ToastContainer
+                position="top-center"
+            />
         </>
     )
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import DOMAIN_NAME from '../utilities/DOMAIN_NAME'
 import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
@@ -14,7 +14,6 @@ import 'react-toastify/dist/ReactToastify.css'
 const EditReview = () => {
     const [review, setReview] = useState(null)
     const location = useLocation()
-    const navigate = useNavigate()
     const id = location.state
 
     const handleOnSubmit = event => {
@@ -31,7 +30,6 @@ const EditReview = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Review updated!')
-                // navigate('/my-reviews')
             })
             .catch(err => console.log(err))
     }
@@ -63,10 +61,10 @@ const EditReview = () => {
                             </div>
                             <p className='fw-bold m-0 ms-2'>{review?.reviewer_name}</p>
                         </div>
-                        <h5 className='mb-3'>Review for {review?.service_name}</h5>
+                        <h5 className='mb-3'>Edit {review?.service_name} review</h5>
                         <Form onSubmit={handleOnSubmit} className='pb-5'>
-                            <textarea defaultValue={review?.reviewer_review} name="textarea" cols="10" rows="10" placeholder='Write your review' className='w-100 p-3 d-inline-block mb-3'></textarea>
-                            <Button variant="info" type='submit' className='text-white'>Submit New Review</Button>
+                            <textarea defaultValue={review?.reviewer_review} name="textarea" cols="10" rows="6" placeholder='Write your review' className='w-100 p-3 d-inline-block mb-3'></textarea>
+                            <Button variant="info" type='submit' className='text-white'>Submit Edited Review</Button>
                         </Form>
                     </Col>
                 </Row>
